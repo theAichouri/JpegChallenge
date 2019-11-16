@@ -28,17 +28,17 @@ public class Main {
         if(openOutcome != JFileChooser.APPROVE_OPTION) {
             System.exit(0);
         }
-        File myf = spider(jfc.getSelectedFile());
-        assert myf != null;
-        System.out.println(myf.toString());
-        Boolean status = isJPEG(myf);
+        File myFile = SelectFile(jfc.getSelectedFile());
+        assert myFile != null;
+        //System.out.println(myFile.toString());
+        Boolean status = isJPEG(myFile);
         if(status) {
             System.out.println("the file is a JPEG");
             JOptionPane.showMessageDialog(null,
                     "the file is a JPEG",
                     "JPegChallenge",
                     JOptionPane.INFORMATION_MESSAGE);
-            getLocation(myf.toString());
+            getLocation(myFile.toString());
         }
         else{
             System.out.println("the file is not a JPEG");
@@ -57,7 +57,6 @@ public class Main {
      */
     public static void getLocation (String path) {
         javaxt.io.Image image = new javaxt.io.Image(path);
-        //HashMap<Integer,Object> hm = image.getGpsTags();
         double[] coordinates;
         if((coordinates = image.getGPSCoordinate()) == null) {
             System.out.println("this file does not contain latitude and longitude coordinates");
@@ -87,7 +86,6 @@ public class Main {
             JOptionPane.showMessageDialog(null,zipCode,"ZipCode of JPEG file",
                     JOptionPane.INFORMATION_MESSAGE);
         }
-
         System.out.println("Location of the Jpeg: "+ formattedAddress);
         JOptionPane.showMessageDialog(null,formattedAddress,"Full Address: ",
                 JOptionPane.INFORMATION_MESSAGE);
@@ -99,7 +97,6 @@ public class Main {
     public static String getZipCode(String formattedAddress) {
         String[] tokens = formattedAddress.split("[ ,]");
         String regex = "^[0-9]{5}(?:-[0-9]{4})?$";
-
         Pattern pattern = Pattern.compile(regex);
 
         for (String s:tokens) {
@@ -116,7 +113,7 @@ public class Main {
     if it is a file, I return it to main, otherwise if it is a directory I list all the files instead that
     Directory
      */
-    public static File spider (File file) throws Exception {
+    public static File SelectFile (File file) throws Exception {
         if(file.isFile()) {
             return file;
         }
@@ -125,7 +122,7 @@ public class Main {
             assert files != null;
             for (File f : files) {
                 if(f.isDirectory()) {
-                    spider(f);
+                    SelectFile(f);
                 }
                 else {
                     return file;
