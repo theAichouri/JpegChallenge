@@ -34,16 +34,20 @@ public class Main {
         Boolean status = isJPEG(myf);
         if(status) {
             System.out.println("the file is a JPEG");
-            JOptionPane.showMessageDialog(null,"the file is a JPEG","JPegChallenge",1);
+            JOptionPane.showMessageDialog(null,
+                    "the file is a JPEG",
+                    "JPegChallenge",
+                    JOptionPane.INFORMATION_MESSAGE);
             getLocation(myf.toString());
         }
         else{
             System.out.println("the file is not a JPEG");
-            JOptionPane.showMessageDialog(null,"the file is not a JPEG"
-                    ,"JPegChallenge",1);
+            JOptionPane.showMessageDialog(null,
+                    "the file is not a JPEG",
+                    "JPegChallenge",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
 
     /*
     getLocation method takes in a file Path to a Jpeg image (as a String), gets the Latitude and Longitude coordinate
@@ -57,9 +61,10 @@ public class Main {
         double[] coordinates;
         if((coordinates = image.getGPSCoordinate()) == null) {
             System.out.println("this file does not contain latitude and longitude coordinates");
-            JOptionPane.showMessageDialog(null,"this file does not contain latitude and longitude coordinates"
-                    ,"JPegChallenge",1);
-
+            JOptionPane.showMessageDialog(null,
+                    "this file does not contain latitude and longitude coordinates",
+                    "JPegChallenge",
+                    JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
         //This api provides a java client to the OpenCage geocoding service
@@ -72,25 +77,27 @@ public class Main {
         String zipCode = getZipCode(formattedAddress);
         if(zipCode == null) {
             System.out.println("the address is not a US address or the zipCode is not valid");
-            JOptionPane.showMessageDialog(null,"the address is not a US address or the zipCode is not valid"
-                    ,"JPegChallenge",1);
+            JOptionPane.showMessageDialog(null,
+                    "the address is not a US address or the zipCode is not valid",
+                    "JPegChallenge",
+                    1);
         }
         else{
             System.out.println("ZipCode: "+ zipCode);
-            JOptionPane.showMessageDialog(null,zipCode
-                    ,"ZipCode of JPEG file",1);
+            JOptionPane.showMessageDialog(null,zipCode,"ZipCode of JPEG file",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
 
         System.out.println("Location of the Jpeg: "+ formattedAddress);
-        JOptionPane.showMessageDialog(null,formattedAddress
-                ,"Full Address: ",1);
+        JOptionPane.showMessageDialog(null,formattedAddress,"Full Address: ",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     /*
     This function takes is an address as a String, checks for a Valid US ZipCode and returns it.
      */
     public static String getZipCode(String formattedAddress) {
-        String[] tokens = formattedAddress.split("[  ,]");
+        String[] tokens = formattedAddress.split("[ ,]");
         String regex = "^[0-9]{5}(?:-[0-9]{4})?$";
 
         Pattern pattern = Pattern.compile(regex);
