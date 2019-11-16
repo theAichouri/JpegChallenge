@@ -8,7 +8,6 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /*
@@ -35,10 +34,13 @@ public class Main {
         Boolean status = isJPEG(myf);
         if(status) {
             System.out.println("the file is a JPEG");
+            JOptionPane.showMessageDialog(null,"the file is a JPEG","JPegChallenge",1);
             getLocation(myf.toString());
         }
         else{
             System.out.println("the file is not a JPEG");
+            JOptionPane.showMessageDialog(null,"the file is not a JPEG"
+                    ,"JPegChallenge",1);
         }
     }
 
@@ -51,10 +53,13 @@ public class Main {
      */
     public static void getLocation (String path) {
         javaxt.io.Image image = new javaxt.io.Image(path);
-        HashMap<Integer,Object> hm = image.getGpsTags();
+        //HashMap<Integer,Object> hm = image.getGpsTags();
         double[] coordinates;
         if((coordinates = image.getGPSCoordinate()) == null) {
-            System.out.println("this file does not contain latitude and logitude coordinates");
+            System.out.println("this file does not contain latitude and longitude coordinates");
+            JOptionPane.showMessageDialog(null,"this file does not contain latitude and longitude coordinates"
+                    ,"JPegChallenge",1);
+
             System.exit(0);
         }
         //This api provides a java client to the OpenCage geocoding service
@@ -67,12 +72,18 @@ public class Main {
         String zipCode = getZipCode(formattedAddress);
         if(zipCode == null) {
             System.out.println("the address is not a US address or the zipCode is not valid");
+            JOptionPane.showMessageDialog(null,"the address is not a US address or the zipCode is not valid"
+                    ,"JPegChallenge",1);
         }
         else{
             System.out.println("ZipCode: "+ zipCode);
+            JOptionPane.showMessageDialog(null,zipCode
+                    ,"ZipCode of JPEG file",1);
         }
 
         System.out.println("Location of the Jpeg: "+ formattedAddress);
+        JOptionPane.showMessageDialog(null,formattedAddress
+                ,"Full Address: ",1);
     }
 
     /*
