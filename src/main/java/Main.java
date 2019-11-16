@@ -30,20 +30,15 @@ public class Main {
         }
         File myFile = SelectFile(jfc.getSelectedFile());
         assert myFile != null;
-        //System.out.println(myFile.toString());
         Boolean status = isJPEG(myFile);
         if(status) {
-            System.out.println("the file is a JPEG");
-            JOptionPane.showMessageDialog(null,
-                    "the file is a JPEG",
-                    "JPegChallenge",
-                    JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("This file is a JPEG");
             getLocation(myFile.toString());
         }
         else{
-            System.out.println("the file is not a JPEG");
+            System.out.println("This file is not a JPEG, Please try choosing a different file");
             JOptionPane.showMessageDialog(null,
-                    "the file is not a JPEG",
+                    "This file is not a JPEG, Please try choosing a different file",
                     "JPegChallenge",
                     JOptionPane.INFORMATION_MESSAGE);
         }
@@ -59,9 +54,9 @@ public class Main {
         javaxt.io.Image image = new javaxt.io.Image(path);
         double[] coordinates;
         if((coordinates = image.getGPSCoordinate()) == null) {
-            System.out.println("this file does not contain latitude and longitude coordinates");
+            System.out.println("this file does not contain GPS coordinates, Please try choosing a different file");
             JOptionPane.showMessageDialog(null,
-                    "this file does not contain latitude and longitude coordinates",
+                    "This file does not contain GPS coordinates, Please try choosing a different files",
                     "JPegChallenge",
                     JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
@@ -75,20 +70,19 @@ public class Main {
         String formattedAddress = response.getResults().get(0).getFormatted();
         String zipCode = getZipCode(formattedAddress);
         if(zipCode == null) {
-            System.out.println("the address is not a US address or the zipCode is not valid");
+            System.out.println("The address is not a US address or the zipCode is not valid");
             JOptionPane.showMessageDialog(null,
-                    "the address is not a US address or the zipCode is not valid",
+                    "The address is not a US address or the zipCode is not valid",
                     "JPegChallenge",
                     1);
         }
         else{
             System.out.println("ZipCode: "+ zipCode);
-            JOptionPane.showMessageDialog(null,zipCode,"ZipCode of JPEG file",
+            JOptionPane.showMessageDialog(null,"This is a Jpeg file taken at zipCode :"
+                            +zipCode+ "\n" + "The full address is:"+formattedAddress,"JPegChallenge",
                     JOptionPane.INFORMATION_MESSAGE);
         }
         System.out.println("Location of the Jpeg: "+ formattedAddress);
-        JOptionPane.showMessageDialog(null,formattedAddress,"Full Address: ",
-                JOptionPane.INFORMATION_MESSAGE);
     }
 
     /*
